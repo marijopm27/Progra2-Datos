@@ -7,6 +7,7 @@ using namespace std;
 class arbolPais{//Arbol BB
 	public:
 		arbolPais(){
+			raizPais=NULL;
 		}
 		
 		void leerArchivoPais();
