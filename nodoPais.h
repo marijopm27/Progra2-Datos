@@ -10,7 +10,7 @@ class nodoPais {
     	nombrePais=x;
     	Hizq=NULL;
     	Hder=NULL;
-        //derecha = NULL;
+        derecha = NULL;
         //izquierda=NULL;
     	
 	}
@@ -19,7 +19,7 @@ class nodoPais {
     string nombrePais;
     nodoPais *Hizq, *Hder;
     //nodo hotel
-    //nodo agencia
+    pnodoAgencia derecha;
     
 };
 

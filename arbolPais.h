@@ -64,7 +64,6 @@ void arbolPais::InsertaBinarioPais(int codPais, string nombrePais, pnodoPais nod
 	if(codPais<nodoP->codigoPais){//insetar izquierda
         if(nodoP->Hizq==NULL){
             nodoP->Hizq = new nodoPais(codPais,nombrePais);
-            cout<<nodoP->Hizq->codigoPais<<endl;
         }else{
             InsertaBinarioPais(codPais,nombrePais,nodoP->Hizq);
         }
@@ -80,6 +79,8 @@ void arbolPais::InsertaBinarioPais(int codPais, string nombrePais, pnodoPais nod
 pnodoPais arbolPais::getRaizPais(){
 	return raizPais;
 }
+
+arbolPais pais;//se declara el arbol Mapa
 
 void InordenR(pnodoPais R){//recorrido inorden recursivo para el arbol BB de Paises
     if(R==NULL){
