@@ -17,7 +17,7 @@ class nodoHotel {
        estrellas = cantestrellas;
        izq = NULL;
        der =NULL;
-       //PisosHotel=NULL;
+       PisosHotel=NULL;
     }
 
   //Hotles
@@ -27,6 +27,7 @@ class nodoHotel {
     int estrellas;
     nodoHotel *izq;   
     nodoHotel *der;
+    nodoPiso* PisosHotel;
    
 };
 typedef nodoHotel *pnodoHotel;
