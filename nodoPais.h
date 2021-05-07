@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string.h>
 #include <stdio.h>
-
 using namespace std;
 class nodoPais {
    public:
@@ -12,7 +11,6 @@ class nodoPais {
     	Hizq=NULL;
     	Hder=NULL;
         derecha = NULL;
-        hoteles = NULL;
         //izquierda=NULL;
     	
 	}
@@ -20,8 +18,8 @@ class nodoPais {
     int codigoPais;
     string nombrePais;
     nodoPais *Hizq, *Hder;
+    //nodo hotel
     pnodoAgencia derecha;
-    pnodoHotel hoteles;
     
 };
 

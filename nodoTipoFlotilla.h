@@ -17,6 +17,7 @@ class nodoTipoFlotilla {
        Hizq =NULL;
        Hder=NULL;
        FB=0;
+       derecha=NULL;
     }
 
 	int FB;
@@ -25,7 +26,7 @@ class nodoTipoFlotilla {
     int cantidadTipoCarros;
     nodoTipoFlotilla *Hizq;
     nodoTipoFlotilla *Hder;
-    //nodoCarro *derecha;
+    nodoCarro *derecha;
        
    
 };

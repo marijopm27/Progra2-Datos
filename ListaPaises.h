@@ -363,4 +363,3 @@ void listaPaises::Mostrar()
       cout<<"Nombre: "<<aux->nombre<<endl;
      cout<<endl;
 }   
-
