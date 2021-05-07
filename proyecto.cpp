@@ -448,6 +448,9 @@ int menu_hoteles(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
                 //system("pause>nul"); // Pausa 
 				menu_lista(agencia, administradorH,administradorA,usuario,hotel);           
                 break;
+            
+            case 5:
+            	menu(agencia,administradorH,administradorA,usuario, hotel);
         }     
 	}
 	else{
