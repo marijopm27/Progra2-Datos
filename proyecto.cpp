@@ -1028,7 +1028,11 @@ void validarAdministradorA(arbolAgencia agencia,ArbolAdministradorH administrado
 	}
 }
 
+<<<<<<< HEAD
 void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAdministradorA administradorA,ArbolUsuario usuario,arbolHotel hotel,long double codigo){
+=======
+void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAdministradorA administradorA,ArbolUsuario usuario,arbolHotel hotel, long double numIden){
+>>>>>>> 1ce52e850e8fee192d5621c5ea66e1461fa84003
 	cout<<endl;
 	cout<<"Bienvenido al menu Usuario"<<endl;
 	cout<<endl;
@@ -1068,7 +1072,11 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 		int codPais;
 		cin>>codPais;
 		agencia.consultarAgencias(pais.getRaizPais(),codPais,1);
+<<<<<<< HEAD
 		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,codigo);
+=======
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,numIden);
+>>>>>>> 1ce52e850e8fee192d5621c5ea66e1461fa84003
 	}
 	else if(opcion==5){
 		cout<<endl;
@@ -1082,7 +1090,11 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 		cin.ignore();
 		agencia.consultarTipoFlotillas(pais.getRaizPais(),codPais,identificacion,1);
 		cout<<endl;
+<<<<<<< HEAD
 		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,codigo);
+=======
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel, numIden);
+>>>>>>> 1ce52e850e8fee192d5621c5ea66e1461fa84003
 	}
 	else if(opcion==6){
 		cout<<endl;
@@ -1099,7 +1111,11 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 		cin>>codigo;
 		cin.ignore();
 		agencia.modificacionConsultasCarro(pais.getRaizPais(),codPais,identificacion,codigo,0,0);
+<<<<<<< HEAD
 		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,codigo); 
+=======
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,numIden); 
+>>>>>>> 1ce52e850e8fee192d5621c5ea66e1461fa84003
 	}
 	else if(opcion==7){
 		Paises.Mostrar();
@@ -1117,14 +1133,42 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 			menuUsuario(agencia,administradorH,administradorA,usuario, hotel,codigo); 
 		}
 		else if(opcionR==2){
-			//
+			cout<<endl;
+			cout<<"Digite el codigo de pais: ";
+			int codPais;
+			cin>>codPais;
+			cin.ignore();
+			if(Paises.Validar(codPais)==0){
+				cout<<"No existe el pais"<<endl;
+				menuUsuario(agencia,administradorH,administradorA,usuario,hotel, numIden);
+			}
+			cout<<"Digite la identificacion de la Agencia: ";
+			int identificacion;
+			cin>>identificacion;
+			cin.ignore();
+			cout<<"Digite el codigo del TipoFlotilla: ";
+			int codigo;
+			cin>>codigo;
+			cin.ignore();
+			cout<<"Digite el numero de placa: ";
+			long double placa;
+			cin>>placa;
+			cin.ignore();
+			if(agencia.existeCarrosDatos(pais.getRaizPais(),codPais,identificacion,codigo,placa)==1){
+				listaReservaA.InsertarFinal(codPais,identificacion,codigo,placa,numIden);
+			}
+				
 		}
 		else if(opcionR==3){
 			
 		}
 		else{
 			cout<<"ERROR, al selecionar opcion"<<endl;
+<<<<<<< HEAD
 			menuUsuario(agencia,administradorH,administradorA,usuario, hotel,codigo);
+=======
+			menuUsuario(agencia,administradorH,administradorA,usuario, hotel,numIden);
+>>>>>>> 1ce52e850e8fee192d5621c5ea66e1461fa84003
 		}
 		
 	}
@@ -1137,17 +1181,28 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 	else{
 		
 		cout<<"Opcion no valida"<<endl;
+<<<<<<< HEAD
 		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,codigo) ; 
+=======
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,numIden) ; 
+>>>>>>> 1ce52e850e8fee192d5621c5ea66e1461fa84003
 	}
 }
 
 void validarUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAdministradorA administradorA,ArbolUsuario usuario, arbolHotel hotel,long double codigo){
 	cout<<endl;
 	cout<<"Ingrese su codigo de Usuario: ";
+<<<<<<< HEAD
 	long double codigo1;
 	cin>>codigo1;
 	if (usuario.validaUsuario(codigo1,usuario.raiz)){
 		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,codigo1);	
+=======
+	long double codigo;
+	cin>>codigo;
+	if (usuario.validaUsuario(codigo,usuario.raiz)){
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel, codigo);	
+>>>>>>> 1ce52e850e8fee192d5621c5ea66e1461fa84003
 	}
 	else{
 		cout<<endl;
