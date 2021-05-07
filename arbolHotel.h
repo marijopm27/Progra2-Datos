@@ -74,6 +74,7 @@ class arbolHotel{//Arbol BB
 		void MostrarPisos(pnodoPiso p, int verificar,int codpais, int codhotel, int numpiso, int codhab);
 		void MostrarHabitaciones(pnodoHabitaciones h, int verificar,int codpais, int codhotel, int numpiso, int codhab);
 		//RECORRER ELEMENTO---------------------------------------------------------------------------------
+		int cantHab(pnodoHabitaciones Piso, int pos);
 		
 		pnodoHotel UltimoHotel;
 		pnodoPiso UltimoPiso;
@@ -703,7 +704,16 @@ void arbolHotel::verificarPisos(pnodoPiso R,int NumPiso, int codigoHabitacion, s
 	}
 	else{//encontrar con la identificacion de hotel
         if (R->piso==NumPiso){
-    		insertarNodoRojoNegro(codigoHabitacion, cuartos,Numcamas, Precio, Estado, R);	
+        	int suma = cantHab(R->Habitaciones,0);
+        	
+        	suma++;
+        	if(suma <= R->habitaciones)
+    			insertarNodoRojoNegro(codigoHabitacion, cuartos,Numcamas, Precio, Estado, R);	
+    		else{
+    			R->habitaciones = suma;
+    			insertarNodoRojoNegro(codigoHabitacion, cuartos,Numcamas, Precio, Estado, R);
+			}
+			
 		}
         verificarPisos(R->izq,NumPiso,codigoHabitacion, cuartos,Numcamas, Precio, Estado);
         verificarPisos(R->der,NumPiso,codigoHabitacion, cuartos,Numcamas, Precio, Estado);
@@ -872,6 +882,18 @@ void arbolHotel::rotacionDerecha(pnodoHabitaciones p,pnodoPiso j)
      }
 }
 
+// Recorrer
+int arbolHotel::cantHab(pnodoHabitaciones R, int pos){
+	cout<<endl;
+	if(R==NULL){
+        return 0;
+    }else{
+    	pos = pos+1;
+        cantHab(R->izq, pos);
+        cantHab(R->der,pos);
+    }
+    return pos;
+}
 // Insertar Menu
 void arbolHotel::insertarHotel(){
 	int  cantestrellas;
@@ -1552,7 +1574,14 @@ void arbolHotel::modificarPisosaux(pnodoPiso R, int NumPiso,int opcion, int veri
 				}
 			
 			}
-			R->habitaciones = Habitaciones;
+			int suma = cantHab(R->Habitaciones, 0);
+			if(suma<Habitaciones){
+				R->habitaciones = Habitaciones;
+			}
+			else{
+				cout<<"\nLa nueva cantidad de habitaciones no respeta la cantidad de habitaciones registradas"<<endl;
+			}
+			
 		 }
 		 else{
 		 	cout<<"\nIngrese el nombre del piso que desea insertar: "<<endl;

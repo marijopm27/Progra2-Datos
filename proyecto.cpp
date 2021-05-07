@@ -8,6 +8,8 @@
 
 #include "nodoListaPaises.h"
 #include "ListaPaises.h"
+#include  "nodoReservas.h"
+#include "Reservaciones.h"
 
 #include "nodoTipoFlotilla.h"
 #include "nodoAgencia.h"
@@ -302,9 +304,6 @@ int menu_insertarh(arbolHotel hotel, arbolPais pais)
                //VALIDA QUE NO SE REPITAN LOS NUMEROS DE PISO  
                {
                	hotel.insertarPisos();
-               	InordenHotel(pais.getRaizPais());
-					
-
 
                 system("pause>nul"); // Pausa
                 break;
@@ -317,9 +316,7 @@ int menu_insertarh(arbolHotel hotel, arbolPais pais)
                 //VALIDA QUE NO SE REPITAN LOS CODIGOS DE HABITACION 
                 {
 					hotel.insertarHabitacion();
-					InordenHotel(pais.getRaizPais());
 
-				
                 system("pause>nul"); // Pausa
                 break;
                 
