@@ -10,13 +10,14 @@ class Reservaciones {
 	}
     ~Reservaciones();
 
-    void InsertarFinal(int v);
+    void InsertarFinal(int v, int c, string x);
     bool ReservacionesVacia() { return primero == NULL; } 
     void Mostrar();
     void Primero();
+    bool ValidaReservacion(int codigoArb);
 
     int largoReservaciones();
-    void invertir();
+    
       
    private:
     pnodoReserva primero; // nodoReserva *primero; tipo nodoReserva tiene derechoi direccionar un nodoReserva
@@ -94,7 +95,7 @@ void Reservaciones::Mostrar()
    else
    {
    
-       	cout<<"LISTA DE RESERVACIONES"
+       	cout<<"LISTA DE RESERVACIONES"<<endl;
    		aux = primero;
 		while(aux) 
 		{

@@ -1,13 +1,13 @@
 #include <iostream>
 using namespace std;
 
-class nodoReservaReserva { 
+class nodoReserva { 
 	
    public:
     nodoReserva(int v, int cod, string t) 
     {
        identificacion = v;
-       codhab = cod;
+       codigo = cod;
        tipo = t;
        siguiente = NULL;
     }
