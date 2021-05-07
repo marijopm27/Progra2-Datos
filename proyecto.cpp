@@ -1028,7 +1028,7 @@ void validarAdministradorA(arbolAgencia agencia,ArbolAdministradorH administrado
 	}
 }
 
-void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAdministradorA administradorA,ArbolUsuario usuario,arbolHotel hotel){
+void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAdministradorA administradorA,ArbolUsuario usuario,arbolHotel hotel, long double numIden){
 	cout<<endl;
 	cout<<"Bienvenido al menu Usuario"<<endl;
 	cout<<endl;
@@ -1062,7 +1062,7 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 		int codPais;
 		cin>>codPais;
 		agencia.consultarAgencias(pais.getRaizPais(),codPais,1);
-		menuUsuario(agencia,administradorH,administradorA,usuario, hotel);
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,numIden);
 	}
 	else if(opcion==5){
 		cout<<endl;
@@ -1076,7 +1076,7 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 		cin.ignore();
 		agencia.consultarTipoFlotillas(pais.getRaizPais(),codPais,identificacion,1);
 		cout<<endl;
-		menuUsuario(agencia,administradorH,administradorA,usuario, hotel);
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel, numIden);
 	}
 	else if(opcion==6){
 		cout<<endl;
@@ -1093,7 +1093,7 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 		cin>>codigo;
 		cin.ignore();
 		agencia.modificacionConsultasCarro(pais.getRaizPais(),codPais,identificacion,codigo,0,0);
-		menuUsuario(agencia,administradorH,administradorA,usuario, hotel); 
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,numIden); 
 	}
 	else if(opcion==7){
 		//paises
@@ -1110,14 +1110,38 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 			//hotel reservacion
 		}
 		else if(opcionR==2){
-			//
+			cout<<endl;
+			cout<<"Digite el codigo de pais: ";
+			int codPais;
+			cin>>codPais;
+			cin.ignore();
+			if(Paises.Validar(codPais)==0){
+				cout<<"No existe el pais"<<endl;
+				menuUsuario(agencia,administradorH,administradorA,usuario,hotel, numIden);
+			}
+			cout<<"Digite la identificacion de la Agencia: ";
+			int identificacion;
+			cin>>identificacion;
+			cin.ignore();
+			cout<<"Digite el codigo del TipoFlotilla: ";
+			int codigo;
+			cin>>codigo;
+			cin.ignore();
+			cout<<"Digite el numero de placa: ";
+			long double placa;
+			cin>>placa;
+			cin.ignore();
+			if(agencia.existeCarrosDatos(pais.getRaizPais(),codPais,identificacion,codigo,placa)==1){
+				listaReservaA.InsertarFinal(codPais,identificacion,codigo,placa,numIden);
+			}
+				
 		}
 		else if(opcionR==3){
 			
 		}
 		else{
 			cout<<"ERROR, al selecionar opcion"<<endl;
-			menuUsuario(agencia,administradorH,administradorA,usuario, hotel);
+			menuUsuario(agencia,administradorH,administradorA,usuario, hotel,numIden);
 		}
 		
 	}
@@ -1129,7 +1153,7 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 	}
 	else{
 		cout<<"Opcion no valida"<<endl;
-		menuUsuario(agencia,administradorH,administradorA,usuario, hotel) ; 
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,numIden) ; 
 	}
 }
 
@@ -1139,7 +1163,7 @@ void validarUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,Arbo
 	long double codigo;
 	cin>>codigo;
 	if (usuario.validaUsuario(codigo,usuario.raiz)){
-		menuUsuario(agencia,administradorH,administradorA,usuario, hotel);	
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel, codigo);	
 	}
 	else{
 		cout<<endl;
