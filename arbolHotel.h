@@ -136,7 +136,7 @@ void arbolHotel::lecturaHoteles(){
    }  
 
    istringstream(w) >> cantestrellas; //almacena la cantidad de estrellas
-   if(Paises.Validar(codpais)==0){
+   if(Paises.Validar(codpais)==1){
  		verificarInsertarHotel(pais.getRaizPais(), codpais,codhotel,nombre,cantestrellas);
    	
    }
@@ -408,8 +408,8 @@ void arbolHotel::lecturaPisosHotel(){
    }  
   // Cantidad de habitaciones
    istringstream(w) >> Habitaciones;
-   
-   verificarInsertarPisos(pais.getRaizPais(),codigopais,codhotel,NumPiso,nombre,Habitaciones);
+   if(Paises.Validar(codigopais)==1)
+   	verificarInsertarPisos(pais.getRaizPais(),codigopais,codhotel,NumPiso,nombre,Habitaciones);
 	//Inserta el piso
    //Hotel.InsertarPisosHotelF(codhotel, NumPiso,nombre,Habitaciones);
    
@@ -658,7 +658,7 @@ void arbolHotel::lecturaHabitaciones(){
   // Estado, solo puede ser L, O , R
    Estado = Estado+w;
    if ((Estado=="L")||(Estado=="R")||(Estado=="O")){
-   		if(Paises.Validar(codpais)==0){
+   		if(Paises.Validar(codpais)==1){
    			verificarPais(pais.getRaizPais(),codpais,codhotel,numpiso,codigoHabitacion,cuartos,Numcamas,Precio,Estado);
 		   }
 	   
@@ -878,7 +878,8 @@ void arbolHotel::insertarHotel(){
     string nombre;
     int codpais;
 	bool repetido1 = false;	
-	while(repetido1==false){
+	bool repetido2 = false;
+	while(repetido1==false && repetido2==false){
         cout<<"\nIngrese el codigo del pais en que desea insertar: ";
         if(cin>>codpais){
 			if(Paises.Validar(codpais)==1){
@@ -886,72 +887,76 @@ void arbolHotel::insertarHotel(){
 	        	if((existePais(pais.getRaizPais(),codpais)==3)||existePais(pais.getRaizPais(),codpais)==2){
 	        		//Entra si el codigo no existe o no hay hoteles
 	            	repetido1=true;
+	            	repetido2=true;
 	            	break;
 				}
 			
 				}
 			else{
 				cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
-				break;
+				repetido2=true;
 				break;
 					}
-	}
+		}
 		else{
 			cout<<"\nEl codigo de pais debe ser un numero entero."<<endl;
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		}
 	}
-		
-	bool no_repetido = false;
-    int codhotel ;    
-    while(no_repetido==false){
-        cout<<"\nIngrese el codigo del Hotel que desea insertar: ";
-        if(cin>>codhotel){
-        	nodoHotel* RaizHotel = paisencontrado->hoteles;
-		
-        	if((existeHotel(RaizHotel, codhotel)==0)){
-        		//Entra si el codigo no existe o no hay hoteles
-            	no_repetido=true;
-            	break;
+	if(repetido1 ==true){
+				
+		bool no_repetido = false;
+	    int codhotel ;    
+	    while(no_repetido==false){
+	        cout<<"\nIngrese el codigo del Hotel que desea insertar: ";
+	        if(cin>>codhotel){
+	        	nodoHotel* RaizHotel = paisencontrado->hoteles;
+			
+	        	if((existeHotel(RaizHotel, codhotel)==0)){
+	        		//Entra si el codigo no existe o no hay hoteles
+	            	no_repetido=true;
+	            	break;
+				}
+				else{
+					cout<<"\nEste codigo de hotel ya esta registrado, favor ingresar otro distinto "<<endl;
+				}
 			}
 			else{
-				cout<<"\nEste codigo de hotel ya esta registrado, favor ingresar otro distinto "<<endl;
+				cout<<"\nEl codigo de hotel debe ser un numero entero."<<endl;
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			}
+	        
+		
 		}
-		else{
-			cout<<"\nEl codigo de hotel debe ser un numero entero."<<endl;
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		}
-        
-	
-}
-	
-	cout<<"\nIngrese el nombre del hotel que desea insertar: ";
-	cin.ignore();
-	getline(cin,nombre);
-	bool estrellas = false;
-	while(estrellas == false){
-		cout<<"\nIngrese las estrellas del hotel a insertar: ";
-	
-		if(cin>>cantestrellas){
-			break;
-		}
-		else{
-			cout<<"\nLa cantidad de estrellas del hotel debe ser un numero entero: "<<endl;
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		if(no_repetido == true){
+		
+			cout<<"\nIngrese el nombre del hotel que desea insertar: ";
+			cin.ignore();
+			getline(cin,nombre);
+			bool estrellas = false;
+			while(estrellas == false){
+				cout<<"\nIngrese las estrellas del hotel a insertar: ";
 			
+				if(cin>>cantestrellas){
+					break;
+				}
+				else{
+					cout<<"\nLa cantidad de estrellas del hotel debe ser un numero entero: "<<endl;
+					cin.clear();
+					cin.ignore(numeric_limits<streamsize>::max(), '\n');
+					
+				}
+			}
+			
+						
+		    verificarInsertarHotel(pais.getRaizPais(),codpais,codhotel,nombre,cantestrellas);
+		    printf("\033[32m");
+		  	cout << "\nHotel insertado con exito" << endl;
+			printf("\033[0m");
 		}
 	}
-	
-				
-    verificarInsertarHotel(pais.getRaizPais(),codpais,codhotel,nombre,cantestrellas);
-    printf("\033[32m");
-  	cout << "\nHotel insertado con exito" << endl;
-	printf("\033[0m");
-
 }
 	
 void arbolHotel::insertarPisos(){
@@ -969,20 +974,27 @@ void arbolHotel::insertarPisos(){
 	while(repetido1==false){
         cout<<"\nIngrese el codigo del pais en que desea insertar: ";
         if(cin>>codpais){
-		
-        	if(existePais(pais.getRaizPais(),codpais)==2){
-        		//Entra si el codigo no existe o no hay hoteles
-            	repetido1=true;
-            	verificaH = true;
-            	break;
-			}
-			if((existePais(pais.getRaizPais(),codpais)==3)){
-				cout<<"\nEste pais no posee hoteles por lo que no puede insertar pisos"<<endl;
-				repetido1=true;
-				break;
+			if(Paises.Validar(codpais)==1){
+			
+	        	if(existePais(pais.getRaizPais(),codpais)==2){
+	        		//Entra si el codigo no existe o no hay hoteles
+	            	repetido1=true;
+	            	verificaH = true;
+	            	break;
+				}
+				if((existePais(pais.getRaizPais(),codpais)==3)){
+					cout<<"\nEste pais no posee hoteles por lo que no puede insertar pisos"<<endl;
+					repetido1=true;
+					break;
+				}
+				else{
+					cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
+				}
 			}
 			else{
 				cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
+				repetido1=true;
+				break;
 			}
 		}
 		else{
@@ -1087,20 +1099,26 @@ void arbolHotel::insertarHabitacion(){
 	while(repetido1==false){
         cout<<"\nIngrese el codigo del pais en que desea insertar: ";
         if(cin>>codpais){
-		
-        	if(existePais(pais.getRaizPais(),codpais)==2){
-        		//Entra si el codigo no existe o no hay hoteles
-            	repetido1=true;
-            	verificaH = true;
-            	break;
-			}
-			if((existePais(pais.getRaizPais(),codpais)==3)){
-				cout<<"\nEste pais no posee hoteles por lo que no puede insertar habitaciones"<<endl;
-				repetido1=true;
-				break;
+        	if(Paises.Validar(codpais)==1){
+	        	if(existePais(pais.getRaizPais(),codpais)==2){
+	        		//Entra si el codigo no existe o no hay hoteles
+	            	repetido1=true;
+	            	verificaH = true;
+	            	break;
+				}
+				if((existePais(pais.getRaizPais(),codpais)==3)){
+					cout<<"\nEste pais no posee hoteles por lo que no puede insertar habitaciones"<<endl;
+					repetido1=true;
+					break;
+				}
+				else{
+					cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
+				}
 			}
 			else{
 				cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
+				repetido1=true;
+				break;
 			}
 		}
 		else{
@@ -1108,9 +1126,10 @@ void arbolHotel::insertarHabitacion(){
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		}
+		
 	}
-	
-	while(existe_hotel==false){
+	if(verificaH==true){
+		while(existe_hotel==false){
     	cout<<"\nIngrese el codigo del Hotel en que desea insertar: ";
     	if(cin>>codhotel){
     		//Valores que devuelve la funcion
@@ -1254,7 +1273,7 @@ void arbolHotel::insertarHabitacion(){
 				
 				}
 			}		
-					
+				
 	    	verificarPais(pais.getRaizPais(),codpais,codhotel,NumPiso,codigoHabitacion,cuartos,Numcamas,Precio,Estado);
 			printf("\033[32m");
 			cout << "\nHabitacion insertado con exito" << endl;
@@ -1262,7 +1281,10 @@ void arbolHotel::insertarHabitacion(){
 	    	
 			}
 			
+		}
+		
 	}
+	
 		
 }
 
@@ -1270,23 +1292,33 @@ void arbolHotel::insertarHabitacion(){
 void arbolHotel::modificarHotel(int opcion, int verificar){
 	
     int codpais;
-	bool repetido1 = false;	
-	while(repetido1==false){
+	bool repetido1 = false;
+	bool verifica = false;	
+	while(verifica==false){
         cout<<"\nIngrese el codigo del pais en que desea insertar: ";
         if(cin>>codpais){
-		
-        	if(existePais(pais.getRaizPais(),codpais)==2){
-        		//Entra si el codigo no existe o no hay hoteles
-            	repetido1=true;
-            	break;
-			}
-			if ((existePais(pais.getRaizPais(),codpais)==3)){
-				cout<<"Este pais no tiene hoteles registrados"<<endl;
-				break;
-				
+        	if(Paises.Validar(codpais)==1){
+			
+			
+	        	if(existePais(pais.getRaizPais(),codpais)==2){
+	        		//Entra si el codigo no existe o no hay hoteles
+	            	repetido1=true;
+	            	verifica=true;
+	            	break;
+				}
+				if ((existePais(pais.getRaizPais(),codpais)==3)){
+					cout<<"Este pais no tiene hoteles registrados"<<endl;
+					verifica=true;
+					break;
+					
+				}
+				else{
+					cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
+				}
 			}
 			else{
 				cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
+				verifica = true;
 			}
 		}
 		else{
@@ -1385,24 +1417,32 @@ void arbolHotel::modificarPisos(int opcion, int verificar){
    
 	//Entra mientras existan hoteles
 	bool repetido1 = false;	
-	bool verificaH = false;
-	while(repetido1==false){
+	bool verifica = false;
+	while(verifica==false){
         cout<<"\nIngrese el codigo del pais en que desea insertar: ";
         if(cin>>codpais){
-		
-        	if(existePais(pais.getRaizPais(),codpais)==2){
-        		//Entra si el codigo no existe o no hay hoteles
-            	repetido1=true;
-            	verificaH = true;
-            	break;
-			}
-			if((existePais(pais.getRaizPais(),codpais)==3)){
-				cout<<"\nEste pais no posee hoteles por lo que no se pueden modificar"<<endl;
-				repetido1=true;
-				break;
+        	if(Paises.Validar(codpais)==1){
+			
+			
+	        	if(existePais(pais.getRaizPais(),codpais)==2){
+	        		//Entra si el codigo no existe o no hay hoteles
+	            	repetido1=true;
+	            	verifica=true;
+	            	break;
+				}
+				if ((existePais(pais.getRaizPais(),codpais)==3)){
+					cout<<"Este pais no tiene hoteles registrados"<<endl;
+					verifica=true;
+					break;
+					
+				}
+				else{
+					cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
+				}
 			}
 			else{
 				cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
+				verifica = true;
 			}
 		}
 		else{
@@ -1411,7 +1451,7 @@ void arbolHotel::modificarPisos(int opcion, int verificar){
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		}
 	}
-	if (verificaH == true){
+	if (repetido1 == true){
 		
 	    while(existe_hotel==false){
 	        cout<<"\nIngrese el codigo del Hotel en el que desea insertar: ";
@@ -1534,24 +1574,32 @@ void arbolHotel::modificarHabitacion(int opcion, int verificar){
     bool existe_hotel = false;
 
    	bool repetido1 = false;	
-	bool verificaH = false;
-	while(repetido1==false){
-        cout<<"\nIngrese el codigo del pais en que desea modificar: ";
+	bool verifica = false;
+	while(verifica==false){
+        cout<<"\nIngrese el codigo del pais en que desea insertar: ";
         if(cin>>codpais){
-		
-        	if(existePais(pais.getRaizPais(),codpais)==2){
-        		//Entra si el codigo no existe o no hay hoteles
-            	repetido1=true;
-            	verificaH = true;
-            	break;
-			}
-			if((existePais(pais.getRaizPais(),codpais)==3)){
-				cout<<"\nEste pais no posee hoteles por lo que no puede modificar habitaciones"<<endl;
-				
-				break;
+        	if(Paises.Validar(codpais)==1){
+			
+			
+	        	if(existePais(pais.getRaizPais(),codpais)==2){
+	        		//Entra si el codigo no existe o no hay hoteles
+	            	repetido1=true;
+	            	verifica=true;
+	            	break;
+				}
+				if ((existePais(pais.getRaizPais(),codpais)==3)){
+					cout<<"Este pais no tiene hoteles registrados"<<endl;
+					verifica=true;
+					break;
+					
+				}
+				else{
+					cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
+				}
 			}
 			else{
 				cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
+				verifica = true;
 			}
 		}
 		else{
@@ -1768,23 +1816,33 @@ void arbolHotel::Reportes(int verificar){
 	}
 	if (verificar==2){
 		int codpais;
-		bool repetido1 = false;	
-		while(repetido1==false){
-		    cout<<"\nIngrese el codigo del pais en que desea insertar: ";
-		    if(cin>>codpais){
-			
-		    	if(existePais(pais.getRaizPais(),codpais)==2){
-		    		//Entra si el codigo no existe o no hay hoteles
-		        	repetido1=true;
-		        	break;
-				}
-				if ((existePais(pais.getRaizPais(),codpais)==3)){
-					cout<<"Este pais no tiene hoteles registrados"<<endl;
-					break;
-					
+		bool repetido1 = false;
+		bool verifica = false;
+		while(verifica==false){
+	        cout<<"\nIngrese el codigo del pais en que desea insertar: ";
+	        if(cin>>codpais){
+	        	if(Paises.Validar(codpais)==1){
+				
+				
+		        	if(existePais(pais.getRaizPais(),codpais)==2){
+		        		//Entra si el codigo no existe o no hay hoteles
+		            	repetido1=true;
+		            	verifica=true;
+		            	break;
+					}
+					if ((existePais(pais.getRaizPais(),codpais)==3)){
+						cout<<"Este pais no tiene hoteles registrados"<<endl;
+						verifica=true;
+						break;
+						
+					}
+					else{
+						cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
+					}
 				}
 				else{
 					cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
+					verifica = true;
 				}
 			}
 			else{
@@ -1838,24 +1896,32 @@ void arbolHotel::Reportes(int verificar){
 	   
 		//Entra mientras existan hoteles
 		bool repetido1 = false;	
-		bool verificaH = false;
-		while(repetido1==false){
-	        cout<<"\nIngrese el codigo del pais en que desea consultar: ";
+		bool verifica = false;
+		while(verifica==false){
+	        cout<<"\nIngrese el codigo del pais en que desea insertar: ";
 	        if(cin>>codpais){
-			
-	        	if(existePais(pais.getRaizPais(),codpais)==2){
-	        		//Entra si el codigo no existe o no hay hoteles
-	            	repetido1=true;
-	            	verificaH = true;
-	            	break;
-				}
-				if((existePais(pais.getRaizPais(),codpais)==3)){
-					cout<<"\nEste pais no posee hoteles por lo que no se pueden consultar"<<endl;
-					repetido1=true;
-					break;
+	        	if(Paises.Validar(codpais)==1){
+				
+				
+		        	if(existePais(pais.getRaizPais(),codpais)==2){
+		        		//Entra si el codigo no existe o no hay hoteles
+		            	repetido1=true;
+		            	verifica=true;
+		            	break;
+					}
+					if ((existePais(pais.getRaizPais(),codpais)==3)){
+						cout<<"Este pais no tiene hoteles registrados"<<endl;
+						verifica=true;
+						break;
+						
+					}
+					else{
+						cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
+					}
 				}
 				else{
 					cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
+					verifica = true;
 				}
 			}
 			else{
@@ -1864,7 +1930,7 @@ void arbolHotel::Reportes(int verificar){
 				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			}
 		}
-		if (verificaH == true){
+		if (repetido1 == true){
 			
 		    while(existe_hotel==false){
 		        cout<<"\nIngrese el codigo del Hotel en el que desea consultar: ";
@@ -1953,24 +2019,32 @@ void arbolHotel::Reportes(int verificar){
 	    bool existe_hotel = false;
 	
 	   	bool repetido1 = false;	
-		bool verificaH = false;
-		while(repetido1==false){
-	        cout<<"\nIngrese el codigo del pais en que desea modificar: ";
+		bool verifica = false;
+		while(verifica==false){
+	        cout<<"\nIngrese el codigo del pais en que desea insertar: ";
 	        if(cin>>codpais){
-			
-	        	if(existePais(pais.getRaizPais(),codpais)==2){
-	        		//Entra si el codigo no existe o no hay hoteles
-	            	repetido1=true;
-	            	verificaH = true;
-	            	break;
-				}
-				if((existePais(pais.getRaizPais(),codpais)==3)){
-					cout<<"\nEste pais no posee hoteles por lo que no puede modificar habitaciones"<<endl;
-					
-					break;
+	        	if(Paises.Validar(codpais)==1){
+				
+				
+		        	if(existePais(pais.getRaizPais(),codpais)==2){
+		        		//Entra si el codigo no existe o no hay hoteles
+		            	repetido1=true;
+		            	verifica=true;
+		            	break;
+					}
+					if ((existePais(pais.getRaizPais(),codpais)==3)){
+						cout<<"Este pais no tiene hoteles registrados"<<endl;
+						verifica=true;
+						break;
+						
+					}
+					else{
+						cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
+					}
 				}
 				else{
 					cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
+					verifica = true;
 				}
 			}
 			else{
