@@ -4,7 +4,7 @@ using namespace std;
 class nodoReserva { 
 	
    public:
-    nodoReserva(int v, int cod, string t) 
+    nodoReserva(long double v, int cod, string t) 
     {
        identificacion = v;
        codigo = cod;
@@ -13,7 +13,7 @@ class nodoReserva {
     }
 
    // atributos
-    int identificacion; // tipo entero. Ej clase estudiante nombre,dir,tel,siguente
+    long double identificacion; // tipo entero. Ej clase estudiante nombre,dir,tel,siguente
     int codigo;
     string tipo;
     nodoReserva *siguiente; // tipo de la clase, clase autoreferencia. Direccion 

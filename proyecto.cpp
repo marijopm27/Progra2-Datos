@@ -1028,7 +1028,7 @@ void validarAdministradorA(arbolAgencia agencia,ArbolAdministradorH administrado
 	}
 }
 
-void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAdministradorA administradorA,ArbolUsuario usuario,arbolHotel hotel){
+void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAdministradorA administradorA,ArbolUsuario usuario,arbolHotel hotel,long double codigo){
 	cout<<endl;
 	cout<<"Bienvenido al menu Usuario"<<endl;
 	cout<<endl;
@@ -1049,12 +1049,18 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 	cin.ignore();
 	cout<<endl;
 	if(opcion==1){
+		hotel.Reportes(1);
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,codigo);
 		
 	}
 	else if(opcion==2){
-		
+		hotel.Reportes(44);
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,codigo);
 	}
 	else if(opcion==3){
+		hotel.Reportes(77);
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,codigo);
+		
 		
 	}
 	else if(opcion==4){
@@ -1062,7 +1068,7 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 		int codPais;
 		cin>>codPais;
 		agencia.consultarAgencias(pais.getRaizPais(),codPais,1);
-		menuUsuario(agencia,administradorH,administradorA,usuario, hotel);
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,codigo);
 	}
 	else if(opcion==5){
 		cout<<endl;
@@ -1076,7 +1082,7 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 		cin.ignore();
 		agencia.consultarTipoFlotillas(pais.getRaizPais(),codPais,identificacion,1);
 		cout<<endl;
-		menuUsuario(agencia,administradorH,administradorA,usuario, hotel);
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,codigo);
 	}
 	else if(opcion==6){
 		cout<<endl;
@@ -1093,10 +1099,10 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 		cin>>codigo;
 		cin.ignore();
 		agencia.modificacionConsultasCarro(pais.getRaizPais(),codPais,identificacion,codigo,0,0);
-		menuUsuario(agencia,administradorH,administradorA,usuario, hotel); 
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,codigo); 
 	}
 	else if(opcion==7){
-		//paises
+		Paises.Mostrar();
 	}
 	else if(opcion==8){
 		cout<<endl;
@@ -1107,7 +1113,8 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 		int opcionR;
 		cin>>opcionR;
 		if(opcionR==1){
-			//hotel reservacion
+			hotel.verificarDatos(codigo,1);
+			menuUsuario(agencia,administradorH,administradorA,usuario, hotel,codigo); 
 		}
 		else if(opcionR==2){
 			//
@@ -1117,7 +1124,7 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 		}
 		else{
 			cout<<"ERROR, al selecionar opcion"<<endl;
-			menuUsuario(agencia,administradorH,administradorA,usuario, hotel);
+			menuUsuario(agencia,administradorH,administradorA,usuario, hotel,codigo);
 		}
 		
 	}
@@ -1128,18 +1135,19 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 		menu(agencia,administradorH,administradorA,usuario, hotel);
 	}
 	else{
+		
 		cout<<"Opcion no valida"<<endl;
-		menuUsuario(agencia,administradorH,administradorA,usuario, hotel) ; 
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,codigo) ; 
 	}
 }
 
-void validarUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAdministradorA administradorA,ArbolUsuario usuario, arbolHotel hotel){
+void validarUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAdministradorA administradorA,ArbolUsuario usuario, arbolHotel hotel,long double codigo){
 	cout<<endl;
 	cout<<"Ingrese su codigo de Usuario: ";
-	long double codigo;
-	cin>>codigo;
-	if (usuario.validaUsuario(codigo,usuario.raiz)){
-		menuUsuario(agencia,administradorH,administradorA,usuario, hotel);	
+	long double codigo1;
+	cin>>codigo1;
+	if (usuario.validaUsuario(codigo1,usuario.raiz)){
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,codigo1);	
 	}
 	else{
 		cout<<endl;
@@ -1170,7 +1178,8 @@ void menu(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAdministr
 		validarAdministradorA(agencia, administradorH,administradorA,usuario,hotel);	
 	}
 	else if(opcion=="3"){
-		validarUsuario(agencia, administradorH,administradorA,usuario,hotel);	
+		long double codigo;
+		validarUsuario(agencia, administradorH,administradorA,usuario,hotel,codigo);	
 	}
 	else if(opcion=="4"){
 		menu_lista(agencia, administradorH,administradorA,usuario,hotel);

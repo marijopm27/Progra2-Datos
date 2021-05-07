@@ -10,7 +10,7 @@ class Reservaciones {
 	}
     ~Reservaciones();
 
-    void InsertarFinal(int v, int c, string x);
+    void InsertarFinal(long double v, int c, string x);
     bool ReservacionesVacia() { return primero == NULL; } 
     void Mostrar();
     void Primero();
@@ -35,7 +35,7 @@ Reservaciones::~Reservaciones() //Destructor
    }
   
 }
-
+Reservaciones ReservacionesH;
 int Reservaciones::largoReservaciones(){ //largo
     int cont=0;
 
@@ -53,7 +53,7 @@ int Reservaciones::largoReservaciones(){ //largo
     
 }
 
-void Reservaciones::InsertarFinal(int identificacion, int cod, string t)
+void Reservaciones::InsertarFinal(long double identificacion, int cod, string t)
 {
    if (ReservacionesVacia())
      primero = new nodoReserva(identificacion, cod, t);

@@ -75,6 +75,9 @@ class arbolHotel{//Arbol BB
 		void MostrarHabitaciones(pnodoHabitaciones h, int verificar,int codpais, int codhotel, int numpiso, int codhab);
 		//RECORRER ELEMENTO---------------------------------------------------------------------------------
 		int cantHab(pnodoHabitaciones Piso, int pos);
+		void verificarDatos(long double codigo, int op);
+		bool validaR(nodoHabitaciones *R, int hab);
+		pnodoHabitaciones Habitacion(nodoHabitaciones *R, int hab);
 		
 		pnodoHotel UltimoHotel;
 		pnodoPiso UltimoPiso;
@@ -91,7 +94,180 @@ class arbolHotel{//Arbol BB
 };
 
 //-------------------------------------------------------------------------------M E T O D O S-----------------------------------------------------
+void arbolHotel::verificarDatos(long double codigo, int op)	{
+	cout<<codigo<<endl;
+	if (op==1){
+		//Reservar Habitacion Simple
+		int codhotel, codpais;
+		int NumPiso;
+		int codigoHabitacion;
 		
+	    bool no_repetido = false;
+	    bool existe_piso = false;
+	    bool existe_hotel = false;
+	
+	   	bool repetido1 = false;	
+		bool verifica = false;
+		while(verifica==false){
+	        cout<<"\nIngrese el codigo del pais en que desea reservar: ";
+	        if(cin>>codpais){
+	        	if(Paises.Validar(codpais)==1){
+				
+				
+		        	if(existePais(pais.getRaizPais(),codpais)==2){
+		        		//Entra si el codigo no existe o no hay hoteles
+		            	repetido1=true;
+		            	verifica=true;
+		            	break;
+					}
+					if ((existePais(pais.getRaizPais(),codpais)==3)){
+						cout<<"Este pais no tiene hoteles registrados"<<endl;
+						verifica=true;
+						break;
+						
+					}
+					else{
+						cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
+					}
+				}
+				else{
+					cout<<"\nEste codigo de pais no esta registrado, favor ingresar otro distinto "<<endl;
+					verifica = true;
+				}
+			}
+			else{
+				cout<<"\nEl codigo de pais debe ser un numero entero."<<endl;
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
+		}
+		if(repetido1==true){
+				while(existe_hotel==false){
+		    	cout<<"\nIngrese el codigo del Hotel en que desea reservar: ";
+		    	if(cin>>codhotel){
+		    		//Valores que devuelve la funcion
+					/*
+					 0 -> No existe el codigo hotel
+					 2-> Existe Hotel con pisos
+					 3-> El hotel existe, pero no tiene pisos
+					 */
+					 nodoHotel* RaizHotel = paisencontrado->hoteles;
+					if((existeHotel(RaizHotel, codhotel)==0)){
+		        		cout<<"\nEste codigo de hotel no esta registrado, favor ingresar otro distinto "<<endl;
+		        		cin.clear();
+						cin.ignore(numeric_limits<streamsize>::max(), '\n');
+					}
+					if((existeHotel(RaizHotel, codhotel)==3)){
+						cout<<"\nEn este hotel no existen pisos registradas"<<endl;
+						break;
+					}
+					if((existeHotel(RaizHotel, codhotel)==2)){		
+						existe_hotel=true;
+		       	 		break;
+					}
+				}
+				else{
+					cout<<"\nEl codigo de hotel debe ser un numero entero"<<endl;
+					cin.clear();
+					cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				}
+			
+			}
+			if(existe_hotel==true){
+				existe_piso = false;
+				while(existe_piso==false){
+		        	cout<<"\nIngrese el numero del piso del Hotel que desea reservar: ";
+		        	if(cin>>NumPiso){
+			    	//Valores que devuelve la funcion
+						/*
+						 0 -> No existe el NumPiso
+						 1-> Existe el NumPios
+						 2-> La lista de pisos est[a vacia
+						 3-> El piso existe, pero no tiene habitaciones
+						 */
+						 nodoPiso* RaizPisos = hotelencontrado->PisosHotel;
+		        		if((existePiso(RaizPisos,NumPiso)==0)){
+		        			cout<<"\nEste numero del piso no esta registrado, favor ingresar otro distinto "<<endl;
+		        			break;
+						}
+						if((existePiso(RaizPisos,NumPiso)==2)){
+							//Para ingresar habitaciones solo importa si el piso existe
+								
+							existe_piso=true;
+		            		break;
+						}
+						if((existePiso(RaizPisos,NumPiso)==3)){
+							cout<<"\nEste numero de piso no posee habitaciones, por lo que no ouede utilizar la opcion"<<endl;
+							break;
+						}
+						
+					}
+					else{
+						cout<<"\nEl numero de piso debe ser un numero entero"<<endl;
+						cin.clear();
+						cin.ignore(numeric_limits<streamsize>::max(), '\n');
+					}
+				}
+				if(existe_piso == true){
+				
+					while(no_repetido==false){
+		        		cout<<"\nIngrese el codigo de habitacion: ";
+		        		if(cin>>codigoHabitacion){
+		        				//Valores que devuelve la funcion
+							/*
+							 0 -> No existe el habitacion
+							 1-> Existe la habitacion
+							 2-> No hay habitaciones
+							 3-> Piso sin habitaciones
+							 */
+							 nodoHabitaciones* RaizHabitacion = pisoencontrado->Habitaciones;
+		        			if((existeHabitaciones(RaizHabitacion,codigoHabitacion)==0)){
+		            			cout<<"\nEste codigo de habitacion no esta registrado, favor ingresar otro distinto "<<endl;
+		                		
+							}
+							else{
+								
+								no_repetido=true;
+		           				break;
+								
+							}
+						}
+						else{
+							cout<<"\nEl codigo de habitacion debe ser un numero entero"<<endl;
+							cin.clear();
+							cin.ignore(numeric_limits<streamsize>::max(), '\n');
+						}
+					}
+					if(ReservacionesH.ValidaReservacion(codigoHabitacion)==false)
+						habitacionencontrada->estado = "R";
+						ReservacionesH.InsertarFinal(codigo,codigoHabitacion,"h");
+			}
+			
+		}
+			
+		}
+}
+}
+
+bool arbolHotel::validaR(nodoHabitaciones* R, int hab){
+	bool r=false;   // 0 indica que no lo encontro
+     if(R==NULL)
+        return r;
+
+     if(hab<R->codHabitacion)
+         r = existeHabitaciones(R->izq, hab);
+     else if(hab> R->codHabitacion)
+         r = existeHabitaciones(R->der, hab);
+     else{
+     	r=true;
+	 }
+
+     return r;
+	 
+		
+}
+
+
 //H O T E L------------------------------------------------------------------
 // Lectura Hotel
 void arbolHotel::lecturaHoteles(){
@@ -342,6 +518,7 @@ int arbolHotel::existeHabitaciones(nodoHabitaciones *R, int hab){
      else if(hab> R->codHabitacion)
          r = existeHabitaciones(R->der, hab);
      else{
+     	habitacionencontrada = R;
      	r=1;
 	 }
 
