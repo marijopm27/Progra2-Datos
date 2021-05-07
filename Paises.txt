@@ -1,0 +1,6 @@
+12;España
+20;Republica Checa
+45;Alemania
+50;Costa Rica
+12;Polonia
+1457;Rusia
