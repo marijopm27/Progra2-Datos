@@ -90,7 +90,7 @@ void listaPaises::Datos(int opcion){
 				
 			}
 			if(Validar(codpais)==1 && opcion==3){
-				
+				repetido1=true;
             	break;
 				
 			}
@@ -102,8 +102,8 @@ void listaPaises::Datos(int opcion){
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		}
 	}
-	if(repetido1==true){
-		cout<<"\nIngrese el nombre del pais que desea insertar: ";
+	if(repetido1==true && opcion==1){
+		cout<<"\nIngrese el nombre del pais : ";
 		cin.ignore();
 		getline(cin,Nombre);
 		
@@ -127,7 +127,10 @@ void listaPaises::Datos(int opcion){
 		  }
 		  BorrarPosicion(posicion,codpais);
 	}
-	if(repetido1==false && opcion==3){
+	if(repetido1==true && opcion==3){
+		cout<<"\nIngrese el nombre del pais : ";
+		cin.ignore();
+		getline(cin,Nombre);
 		pnodoLista encontrado  =  primero;
     	pnodoLista actual;
 	    actual = encontrado;
@@ -142,6 +145,10 @@ void listaPaises::Datos(int opcion){
 		 		
 			 }
 		  }
+		  if (actual->valor==codpais){
+			 	actual->nombre = Nombre;
+			 	
+		 	}
 
 	}
 		

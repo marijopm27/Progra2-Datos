@@ -115,7 +115,7 @@ int menu_reportesh(arbolAgencia agencia,ArbolAdministradorH administradorH,Arbol
                 //Consultar Habitaciones Especificas
 				//solicita codigo de hotel y Numero de piso 
 				
-				hotel.Reportes(77);
+				hotel.Reportes(7);
                 system("pause>nul"); // Paua
                 break;
                 
@@ -182,7 +182,7 @@ int menu_lista(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAdmi
                 
 			case 3:
                 //Opciones de Consulta               
-                Paises.Datos(2);
+                Paises.Datos(3);
                 system("pause>nul"); // Pausa 
 				         
                 break;

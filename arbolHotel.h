@@ -79,9 +79,7 @@ class arbolHotel{//Arbol BB
 		bool validaR(nodoHabitaciones *R, int hab);
 		pnodoHabitaciones Habitacion(nodoHabitaciones *R, int hab);
 		
-		pnodoHotel UltimoHotel;
-		pnodoPiso UltimoPiso;
-		pnodoHabitaciones UltimaHabitacion;
+
 		
 		pnodoPais paisencontrado;
 		pnodoHotel hotelencontrado;
@@ -92,7 +90,9 @@ class arbolHotel{//Arbol BB
 		
 	
 };
-
+		pnodoHotel UltimoHotel;
+		pnodoPiso UltimoPiso;
+		pnodoHabitaciones UltimaHabitacion;
 //-------------------------------------------------------------------------------M E T O D O S-----------------------------------------------------
 void arbolHotel::verificarDatos(long double codigo, int op)	{
 	cout<<codigo<<endl;
@@ -337,6 +337,7 @@ void arbolHotel::verificarInsertarHotel(pnodoPais R,int codPais, int codhotel, s
     		}
     		else{
     			InsertaBinarioHotel(R->hoteles, codhotel,nomHotel,estrellas);
+    			
     		
 			}
 		}
@@ -355,6 +356,7 @@ void arbolHotel::InsertaBinarioHotel(pnodoHotel Hotel,int codhotel, string nomHo
             
         }else{
             InsertaBinarioHotel(Hotel->izq,codhotel,nomHotel,estrellas);
+            
         }
     }else if (codhotel>Hotel->codigoh){//insertar derecha
         if(Hotel->der==NULL){
@@ -633,7 +635,7 @@ void arbolHotel::insertarBalanceadoPisos(pnodoPiso &ra,bool Hh,int NumPiso, stri
     	
         ra=new nodoPiso(NumPiso, NombrePiso, habitaciones);
         UltimoPiso=ra;
-        cout<<UltimoPiso->habitaciones<<endl;
+        //cout<<UltimoPiso->habitaciones<<endl;
         Hh = true;
     }else{
         ra->piso;
@@ -900,7 +902,8 @@ void arbolHotel::verificarPisos(pnodoPiso R,int NumPiso, int codigoHabitacion, s
 
 void arbolHotel::insertarNodoRojoNegro(int codigoHabitacion,string cuartos,int Numcamas,int Precio,string Estado, pnodoPiso u){
      pnodoHabitaciones p,q;
-     pnodoHabitaciones t=new nodoHabitaciones(codigoHabitacion,cuartos, Numcamas, Precio, Estado,NULL,NULL,'r');
+     UltimaHabitacion =new nodoHabitaciones(codigoHabitacion,cuartos, Numcamas, Precio, Estado,NULL,NULL,'r');
+     pnodoHabitaciones t=UltimaHabitacion;
      UltimaHabitacion=t;
      p=u->Habitaciones;
      q=NULL;
@@ -2390,7 +2393,11 @@ void arbolHotel::MostrarHabitaciones(pnodoHabitaciones R,int verificar, int codp
         MostrarHabitaciones(R->izq,verificar,codpais, codhotel, numpiso, codhab);
         if(verificar==77){
         	cout<<"Codigo Habitacion "<<R->codHabitacion<<endl;
-    		cout<<endl;
+			cout<<"Tipo de Cuarto: "<<R->cuarto<<endl;
+			cout<<"Numero de Camas: "<<R->camas<<endl;
+			cout<<"Precio: "<<R->precio<<endl;
+			cout<<"Estado: "<<R->estado<<endl;
+			cout<<endl;
 		}
 		if(verificar==7){
 			if(codhab== R->codHabitacion){
