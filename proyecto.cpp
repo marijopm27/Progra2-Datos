@@ -1157,7 +1157,42 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 				
 		}
 		else if(opcionR==3){
-			
+			cout<<endl;
+			cout<<"Digite el codigo de pais: ";
+			int codPais;
+			cin>>codPais;
+			cin.ignore();
+			if(Paises.Validar(codPais)==0){
+				cout<<"No existe el pais"<<endl;
+				menuUsuario(agencia,administradorH,administradorA,usuario,hotel, numIden);
+			}
+			cout<<"Digite la identificacion de la Agencia: ";
+			int identificacion;
+			cin>>identificacion;
+			cin.ignore();
+			//pedir dato codHotel
+			if(agencia.agenciaenPais(pais.getRaizPais(),codPais,identificacion)==1/*aqui la otra verificscion*/){
+				cout<<"Los 2 datos se encuentran en el mismo pais puede hacer la reservacion"<<endl;
+				cout<<"Digite el codigo del TipoFlotilla: ";
+				int codigo;
+				cin>>codigo;
+				cin.ignore();
+				cout<<"Digite el numero de placa: ";
+				long double placa;
+				cin>>placa;
+				cin.ignore();
+				if(agencia.existeCarrosDatos(pais.getRaizPais(),codPais,identificacion,codigo,placa)){
+					cout<<"Se realizo la reservacion"<<endl;
+					listaReservaA.InsertarFinal(codPais,identificacion,codigo,placa,numIden);
+					menuUsuario(agencia,administradorH,administradorA,usuario,hotel, numIden);
+				}else{
+					cout<<"No existe carro con esos datos o ya esta reservado"<<endl;
+					menuUsuario(agencia,administradorH,administradorA,usuario,hotel, numIden);
+				}
+			}else{
+				cout<<"No estan en el mismo pais"<<endl;
+				menuUsuario(agencia,administradorH,administradorA,usuario,hotel, numIden);
+			}
 		}
 		else{
 			cout<<"ERROR, al selecionar opcion"<<endl;

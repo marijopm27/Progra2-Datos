@@ -27,6 +27,8 @@ class arbolAgencia{//Arbol BB
 		bool existeCarrosDatosA(pnodoAgencia R, int identificacion, int codTipo, long double placa);
 		bool existeCarrosDatosT(pnodoTipoFlotilla R, int codTipo, long double placa);
 		bool existeCarrosDatosC(pnodoCarro R, long double placa );
+		bool agenciaenPais(pnodoPais R, int codPais, int identificacion);
+		bool agenciaenPaisA(pnodoAgencia R,  int identificacion);
 		
 		//Archivos e inserciones de Flotilla
 		void leerArchivoTipoFlotilla();
@@ -264,6 +266,43 @@ void arbolAgencia::modificarNombreAgenciaAux(pnodoAgencia R, int identificacion,
 	modificarNombreAgenciaAux(R->Hizq,identificacion, nombre);
 	modificarNombreAgenciaAux(R->Hder,identificacion, nombre);
 }
+
+bool arbolAgencia::agenciaenPais(pnodoPais R, int codPais, int identificacion){
+	int r=0;
+	if(R==NULL){
+		return r;
+	}
+	if(codPais<R->codigoPais){
+		r=agenciaenPais(R->Hizq, codPais, identificacion);
+	}
+	if(codPais>R->codigoPais){
+		r=agenciaenPais(R->Hder, codPais, identificacion);
+	}
+    else if(codPais==R->codigoPais){
+    	if(agenciaenPaisA(R->derecha, identificacion)){
+    		r=1;
+		}
+	}
+	return r;
+}
+
+bool arbolAgencia::agenciaenPaisA(pnodoAgencia R,  int identificacion){
+	int r=0;
+	if(R==NULL){
+		return r;
+	}
+	if(identificacion<R->identificacion){
+		r=agenciaenPaisA(R->Hizq, identificacion);
+	}
+	if(identificacion>R->identificacion){
+		r=agenciaenPaisA(R->Hder,  identificacion);
+	}
+    else if(identificacion==R->identificacion){
+    	r=1;
+	}
+	return r;
+}
+
 
 //-------------------------------------------------------------------------------------------------------------------------------------------
 
