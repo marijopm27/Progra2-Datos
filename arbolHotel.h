@@ -2445,6 +2445,7 @@ void arbolHotel::MostrarPisos(pnodoPiso R,int verificar, int codpais, int codhot
 		
 			cout<<"Codigo Piso "<<R->piso<<endl;
     		cout<<"Nombre Piso "<<R->Nombre<<endl;
+    		cout<<"Cantidad Habitaciones "<<R->habitaciones<<endl;
 			
     		
         	
