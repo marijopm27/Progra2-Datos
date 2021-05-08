@@ -13,7 +13,7 @@
 class listaPaises {
    public:
     listaPaises() { primero = NULL; }
-    ~listaPaises();
+    
     
     void leerArchivoPais();
     void InsertarFinal(int v, string nombre);
@@ -34,19 +34,7 @@ class listaPaises {
    
 };
 
-listaPaises::~listaPaises()
-{
-   pnodoLista aux;
-   
-   while(primero) {
-      aux = primero;
-      primero = primero->siguiente;
-      primero->anterior=aux->anterior;
-      aux->anterior->siguiente=primero;
-      delete aux;
-   }
-   
-}
+
 
 int listaPaises::largoLista()
 {
@@ -205,7 +193,7 @@ void listaPaises::leerArchivoPais(){
 
 void listaPaises::InsertarFinal(int v, string nombre)
 {
-   if (ListaVacia())
+   if (primero==NULL)
      {
      primero = new nodoLista(v, nombre);
      primero->anterior=primero;
@@ -214,7 +202,6 @@ void listaPaises::InsertarFinal(int v, string nombre)
    else
    { 
    	
-	   
      	pnodoLista nuevo = new nodoLista(v, nombre);
      	nuevo->anterior = primero->anterior;
      	nuevo->siguiente=primero->anterior->siguiente;

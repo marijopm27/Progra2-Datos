@@ -11,11 +11,6 @@ class nodoLista {
        anterior =NULL;
     }
 
-   nodoLista(int v, nodoLista * signodo)
-    {
-       valor = v;
-       siguiente = signodo;
-    }
     int valor;
     string nombre;
     nodoLista*siguiente;

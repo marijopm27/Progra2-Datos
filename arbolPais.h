@@ -47,7 +47,7 @@ void arbolPais::leerArchivoPais(){
 		}
 		//cout<<codPais<<"   "<<nombrePais<<endl;
 		int codigo=atoi(codPais.c_str());//pasar de string a entero	
-		insertarPais(codigo, nombrePais);	
+		insertarPais(codigo, nombrePais);
 	}
 	archivo.close();	
 }

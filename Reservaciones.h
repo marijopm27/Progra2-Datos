@@ -8,7 +8,6 @@ class Reservaciones {
       primero=NULL;   	
     	
 	}
-    ~Reservaciones();
 
     void InsertarFinal(long double v, int c, string x);
     bool ReservacionesVacia() { return primero == NULL; } 
@@ -24,17 +23,7 @@ class Reservaciones {
    
 };
   
-Reservaciones::~Reservaciones() //Destructor
-{
-   pnodoReserva aux;
-   
-   while(primero) {
-      aux = primero;
-      primero = primero->siguiente;
-      delete aux;
-   }
-  
-}
+
 Reservaciones ReservacionesH;
 int Reservaciones::largoReservaciones(){ //largo
     int cont=0;

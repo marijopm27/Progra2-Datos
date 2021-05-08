@@ -829,10 +829,11 @@ void arbolAgencia::modificacionConsultasCarroC(pnodoCarro R, long double placa, 
 			return;
 		}
 		else if(modificar==3){
-				cout<<"El nuevo estado del carro es: ";
+				cout<<endl;
 				cout<<"R-Reservado"<<endl;
 				cout<<"O-Ocupado"<<endl;
 				cout<<"L-Libre"<<endl;
+				cout<<"El nuevo estado del carro es: ";
 				string estado;
 				getline(cin,estado);
 				if(estado=="R"){
@@ -842,6 +843,9 @@ void arbolAgencia::modificacionConsultasCarroC(pnodoCarro R, long double placa, 
 					R->estadoCarro="O";		
 				}
 				else if(estado=="L"){
+					if(R->estadoCarro=="R"){
+						listaReservaA.eliminar(R->placa);
+					}
 					R->estadoCarro="L";
 				}else{
 					cout<<"Error. Se debe seleccionar una de las 3 letras."<<endl;
@@ -945,7 +949,7 @@ bool arbolAgencia::existeCarrosDatos(pnodoPais R, int codPais, int identificacio
 	if(codPais>R->codigoPais){
 		r=existeCarrosDatos(R->Hder, codPais, identificacion,  codTipo, placa);
 	}
-    else{
+    else if(codPais==R->codigoPais){
     	if(existeCarrosDatosA(R->derecha, identificacion, codTipo, placa)){
     		r=1;
 		}
@@ -964,7 +968,7 @@ bool arbolAgencia::existeCarrosDatosA(pnodoAgencia R, int identificacion, int co
 	if(identificacion>R->identificacion){
 		r=existeCarrosDatosA(R->Hder,  identificacion,  codTipo, placa);
 	}
-    else{
+    else if(identificacion==R->identificacion){
     	if(existeCarrosDatosT(R->derecha,  codTipo, placa)){
     		r=1;
 		}
@@ -983,7 +987,7 @@ bool arbolAgencia::existeCarrosDatosT(pnodoTipoFlotilla R, int codTipo, long dou
 	if(codTipo>R->codTipo){
 		r=existeCarrosDatosT(R->Hder,   codTipo, placa);
 	}
-    else{
+    else if(codTipo==R->codTipo){
     	if(existeCarrosDatosC(R->derecha, placa)){
     		r=1;
 		}
@@ -1002,7 +1006,8 @@ bool arbolAgencia::existeCarrosDatosC(pnodoCarro R, long double placa ){
 	if(placa>R->placa){
 		r=existeCarrosDatosC(R->hder, placa);
 	}
-    else{
+    else if(placa==R->placa&&R->estadoCarro=="L"){
+    	R->estadoCarro="R";
     	r=1;
 	}
 	return r;
