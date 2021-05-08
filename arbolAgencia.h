@@ -697,8 +697,7 @@ void arbolAgencia::verificarInsertarCarroTipoFlotillas(pnodoTipoFlotilla R,int c
 }
 
 void arbolAgencia::verPlacaRepetida(pnodoTipoFlotilla R, long double placa, string modelo, int numAsientos, int ano, int precioCarro, string estadoCarro){
-	if(verificarPlacaGlobal(pais.getRaizPais(),placa)==1){
-		cout<<placa<<endl;
+	if(verificarPlacaGlobal(pais.getRaizPais(),placa)>0){
 		return;
 	}else{
 		insertarAA(R->derecha,placa, modelo, numAsientos,ano, precioCarro,estadoCarro);
@@ -923,58 +922,51 @@ void arbolAgencia::uCarro(){
 }
 
 int arbolAgencia::verificarPlacaGlobal(pnodoPais R, long double placa){
-	int validar=0;
+	int r=0;
 	if(R==NULL){
-		return validar;
+		return r;
 	}
-	else{
-    	validar=verificarPlacaGlobalA(R->derecha,placa);
-        verificarPlacaGlobal(R->Hizq, placa);
-        verificarPlacaGlobal(R->Hder, placa);
-    }
-    return validar;
+	if(verificarPlacaGlobalA(R->derecha,placa)>0){
+		r=1;
+	}
+	
+	return r+verificarPlacaGlobal(R->Hder, placa)+verificarPlacaGlobal(R->Hizq, placa);
 }
 
 int arbolAgencia::verificarPlacaGlobalA(pnodoAgencia R, long double placa){
-	int validar=0;;
+	int r=0;
 	if(R==NULL){
-		return validar;
+		return r;
 	}
-	else{
-    	validar=verificarPlacaGlobalT(R->derecha,placa);
-        verificarPlacaGlobalA(R->Hizq, placa);
-        verificarPlacaGlobalA(R->Hder, placa);
-    }
-    return validar;
+	if(verificarPlacaGlobalT(R->derecha,placa)>0){
+		r=1;
+	}
+	
+	return r+verificarPlacaGlobalA(R->Hder, placa)+verificarPlacaGlobalA(R->Hizq, placa);
 }
 
 int arbolAgencia::verificarPlacaGlobalT(pnodoTipoFlotilla R, long double placa){
-	int validar=0;
+	int r=0;
 	if(R==NULL){
-		return validar;
+		return r;
 	}
-	else{
-    	validar=verificarPlacaGlobalC(R->derecha,placa);
-		
-        verificarPlacaGlobalT(R->Hizq, placa);
-        verificarPlacaGlobalT(R->Hder, placa);
-    }
-    return validar;
+	if(verificarPlacaGlobalC(R->derecha,placa)>0){
+		r=1;
+	}
+	
+	return r+verificarPlacaGlobalT(R->Hder, placa)+verificarPlacaGlobalT(R->Hizq, placa);
 }
 
 int arbolAgencia::verificarPlacaGlobalC(pnodoCarro R, long double placa){
-	int validar=0;
+	int r=0;
 	if(R==NULL){
-		return validar;
+		return r;
 	}
-	else{
-    	if(placa==R->placa){
-    		return 1;
-		}
-        verificarPlacaGlobalC(R->hizq, placa);
-        verificarPlacaGlobalC(R->hder, placa);
-    }
-    return 0;
+	if(R->placa==placa){
+		r=1;
+	}
+	
+	return r+verificarPlacaGlobalC(R->hder, placa)+verificarPlacaGlobalC(R->hizq, placa);
 }
 
 bool arbolAgencia::existeCarrosDatos(pnodoPais R, int codPais, int identificacion, int codTipo, long double placa){

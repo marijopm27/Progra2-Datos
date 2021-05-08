@@ -1066,9 +1066,15 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 		
 	}
 	else if(opcion==4){
+		cout<<endl;
 		cout<<"Digite el codigo de pais: ";
 		int codPais;
 		cin>>codPais;
+		cin.ignore();
+		if(Paises.Validar(codPais)==0){
+			cout<<"No existe el pais"<<endl;
+			menuUsuario(agencia,administradorH,administradorA,usuario,hotel, numIden);
+		}
 		agencia.consultarAgencias(pais.getRaizPais(),codPais,1);
 		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,numIden);
 	}
@@ -1078,6 +1084,10 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 		int codPais;
 		cin>>codPais;
 		cin.ignore();
+		if(Paises.Validar(codPais)==0){
+			cout<<"No existe el pais"<<endl;
+			menuUsuario(agencia,administradorH,administradorA,usuario,hotel, numIden);
+		}
 		cout<<"Digite la identificacion de la Agencia: ";
 		int identificacion;
 		cin>>identificacion;
@@ -1088,10 +1098,15 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 	}
 	else if(opcion==6){
 		cout<<endl;
+		cout<<endl;
 		cout<<"Digite el codigo de pais: ";
 		int codPais;
 		cin>>codPais;
 		cin.ignore();
+		if(Paises.Validar(codPais)==0){
+			cout<<"No existe el pais"<<endl;
+			menuUsuario(agencia,administradorH,administradorA,usuario,hotel, numIden);
+		}
 		cout<<"Digite la identificacion de la Agencia: ";
 		int identificacion;
 		cin>>identificacion;
@@ -1107,6 +1122,7 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 	}
 	else if(opcion==7){
 		Paises.Mostrar();
+		menuUsuario(agencia,administradorH,administradorA,usuario, hotel,numIden); 
 	}
 	else if(opcion==8){
 		cout<<endl;

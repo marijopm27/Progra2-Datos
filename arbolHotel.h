@@ -509,7 +509,6 @@ int arbolHotel::existeHabitaciones(nodoHabitaciones *R, int hab){
 	/*
 	0 =  No existe el habitacion o no hay habitaciones
 	1 = Existe / Repetido
-
 	*/
 	int r=0;   // 0 indica que no lo encontro
      if(R==NULL)
@@ -2506,4 +2505,3 @@ void arbolHotel::recorrePais(pnodoPais R, int verificar, int codpais, int codhot
         recorrePais(R->Hder, verificar,codpais, codhotel,  numpiso,  codhab);
     }
 }
-
