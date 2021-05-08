@@ -62,7 +62,7 @@ void listaPaises::Datos(int opcion){
     int codpais;
 	bool repetido1 = false;	
 	while(repetido1==false){
-        cout<<"\nIngrese el codigo del pais en que desea insertar: ";
+        cout<<"\nIngrese el codigo del pais: ";
         if(cin>>codpais){
 		
         	if(Validar(codpais)==0 && opcion==1){
