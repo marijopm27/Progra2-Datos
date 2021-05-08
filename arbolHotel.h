@@ -238,7 +238,7 @@ void arbolHotel::verificarDatos(long double codigo, int op)	{
 							cin.ignore(numeric_limits<streamsize>::max(), '\n');
 						}
 					}
-					if(ReservacionesH.ValidaReservacion(codigoHabitacion)==false)
+					if(ReservacionesH.ValidaReservacion(codigoHabitacion)==false && habitacionencontrada->estado=="L")
 						habitacionencontrada->estado = "R";
 						ReservacionesH.InsertarFinal(codigo,codigoHabitacion,"h");
 			}
@@ -1497,7 +1497,7 @@ void arbolHotel::modificarHotel(int opcion, int verificar){
 	bool repetido1 = false;
 	bool verifica = false;	
 	while(verifica==false){
-        cout<<"\nIngrese el codigo del pais en que desea insertar: ";
+        cout<<"\nIngrese el codigo del pais en que desea modificar: ";
         if(cin>>codpais){
         	if(Paises.Validar(codpais)==1){
 			
@@ -1580,7 +1580,7 @@ void arbolHotel::modificarhotelaux(pnodoHotel R, int hotel,int opcion_menu, int 
      		{
      			bool estrellas = false;
 				while(estrellas == false){
-					cout<<"\nIngrese las estrellas del hotel a insertar: ";
+					cout<<"\nIngrese las estrellas del hotel a modificar: ";
 				
 					if(cin>>cantestrellas){
 						break;
@@ -1621,7 +1621,7 @@ void arbolHotel::modificarPisos(int opcion, int verificar){
 	bool repetido1 = false;	
 	bool verifica = false;
 	while(verifica==false){
-        cout<<"\nIngrese el codigo del pais en que desea insertar: ";
+        cout<<"\nIngrese el codigo del pais en que desea modificar: ";
         if(cin>>codpais){
         	if(Paises.Validar(codpais)==1){
 			
@@ -1656,7 +1656,7 @@ void arbolHotel::modificarPisos(int opcion, int verificar){
 	if (repetido1 == true){
 		
 	    while(existe_hotel==false){
-	        cout<<"\nIngrese el codigo del Hotel en el que desea insertar: ";
+	        cout<<"\nIngrese el codigo del Hotel en el que desea modificar: ";
 	        if(cin>>codhotel){
 	        	nodoHotel* RaizHotel = paisencontrado->hoteles;
 			
@@ -1741,7 +1741,7 @@ void arbolHotel::modificarPisosaux(pnodoPiso R, int NumPiso,int opcion, int veri
      		bool cantidad_hab = false;
      		cout<<R->habitaciones<<endl;
 			while(cantidad_hab==false){
-				cout<<"Ingrese la cantidad de habitaciones del hotel a insertar: ";
+				cout<<"Ingrese la cantidad de habitaciones del hotel a modificar: ";
 				if(cin>>Habitaciones){
 					cantidad_hab = true;
 					break;
@@ -1764,7 +1764,7 @@ void arbolHotel::modificarPisosaux(pnodoPiso R, int NumPiso,int opcion, int veri
 			
 		 }
 		 else{
-		 	cout<<"\nIngrese el nombre del piso que desea insertar: "<<endl;
+		 	cout<<"\nIngrese el nombre del piso que desea modificar: "<<endl;
 			cin.ignore();
 			getline(cin,nombre);
 			R->Nombre = nombre;
@@ -1785,7 +1785,7 @@ void arbolHotel::modificarHabitacion(int opcion, int verificar){
    	bool repetido1 = false;	
 	bool verifica = false;
 	while(verifica==false){
-        cout<<"\nIngrese el codigo del pais en que desea insertar: ";
+        cout<<"\nIngrese el codigo del pais en que desea modificar: ";
         if(cin>>codpais){
         	if(Paises.Validar(codpais)==1){
 			
@@ -1819,7 +1819,7 @@ void arbolHotel::modificarHabitacion(int opcion, int verificar){
 	}
 	if(repetido1==true){
 			while(existe_hotel==false){
-	    	cout<<"\nIngrese el codigo del Hotel en que modificar insertar: ";
+	    	cout<<"\nIngrese el codigo del Hotel en que modificar : ";
 	    	if(cin>>codhotel){
 	    		//Valores que devuelve la funcion
 				/*
@@ -1852,7 +1852,7 @@ void arbolHotel::modificarHabitacion(int opcion, int verificar){
 		if(existe_hotel==true){
 			existe_piso = false;
 			while(existe_piso==false){
-	        	cout<<"\nIngrese el numero del piso del Hotel que desea insertar: ";
+	        	cout<<"\nIngrese el numero del piso del Hotel que desea modificar: ";
 	        	if(cin>>NumPiso){
 		    	//Valores que devuelve la funcion
 					/*
@@ -1938,7 +1938,7 @@ void arbolHotel::modificarHabitacionaux(pnodoHabitaciones R, int codhabitacion, 
      		
      		cout<< "Tipo de cuarto actual -> "<<R->cuarto<<endl;
      		cout<<endl;
-     		cout<<"\nIngrese el tipo de cuarto que desea insertar: ";
+     		cout<<"\nIngrese el tipo de cuarto que desea modificar: ";
      		cin.ignore();
 			getline(cin,cuartos);
 			R->cuarto =cuartos;
@@ -2010,7 +2010,7 @@ void arbolHotel::modificarHabitacionaux(pnodoHabitaciones R, int codhabitacion, 
 				}
 			}
 			R->estado = Estado;
-			cout<<"Nuevo precio "<<R->estado<<endl;		
+			cout<<"Nuevo Estado "<<R->estado<<endl;		
 			
 		}
 		
@@ -2028,7 +2028,7 @@ void arbolHotel::Reportes(int verificar){
 		bool repetido1 = false;
 		bool verifica = false;
 		while(verifica==false){
-	        cout<<"\nIngrese el codigo del pais en que desea insertar: ";
+	        cout<<"\nIngrese el codigo del pais en que desea consultar: ";
 	        if(cin>>codpais){
 	        	if(Paises.Validar(codpais)==1){
 				
@@ -2107,7 +2107,7 @@ void arbolHotel::Reportes(int verificar){
 		bool repetido1 = false;	
 		bool verifica = false;
 		while(verifica==false){
-	        cout<<"\nIngrese el codigo del pais en que desea insertar: ";
+	        cout<<"\nIngrese el codigo del pais en que desea consultar: ";
 	        if(cin>>codpais){
 	        	if(Paises.Validar(codpais)==1){
 				
@@ -2177,7 +2177,7 @@ void arbolHotel::Reportes(int verificar){
 				
 					no_repetido = false;
 					while(no_repetido==false){
-				    	cout<<"\nIngrese el numero del piso del Hotel que desea modificar: ";
+				    	cout<<"\nIngrese el numero del piso del Hotel que desea consultar: ";
 				    	if(cin>>NumPiso){
 				    		nodoPiso* RaizPisos = hotelencontrado->PisosHotel;
 				    		if((existePiso(RaizPisos,NumPiso)==0)){
@@ -2230,7 +2230,7 @@ void arbolHotel::Reportes(int verificar){
 	   	bool repetido1 = false;	
 		bool verifica = false;
 		while(verifica==false){
-	        cout<<"\nIngrese el codigo del pais en que desea insertar: ";
+	        cout<<"\nIngrese el codigo del pais en que desea consultar: ";
 	        if(cin>>codpais){
 	        	if(Paises.Validar(codpais)==1){
 				
@@ -2264,7 +2264,7 @@ void arbolHotel::Reportes(int verificar){
 		}
 		if(repetido1==true){
 				while(existe_hotel==false){
-		    	cout<<"\nIngrese el codigo del Hotel en que modificar insertar: ";
+		    	cout<<"\nIngrese el codigo del Hotel en que consultar: ";
 		    	if(cin>>codhotel){
 		    		//Valores que devuelve la funcion
 					/*
@@ -2297,7 +2297,7 @@ void arbolHotel::Reportes(int verificar){
 			if(existe_hotel==true){
 				existe_piso = false;
 				while(existe_piso==false){
-		        	cout<<"\nIngrese el numero del piso del Hotel que desea insertar: ";
+		        	cout<<"\nIngrese el numero del piso del Hotel que desea consultar: ";
 		        	if(cin>>NumPiso){
 			    	//Valores que devuelve la funcion
 						/*
