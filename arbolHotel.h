@@ -2377,7 +2377,8 @@ void arbolHotel::Reportes(int verificar){
 		cout<<"Codigo: "<<UltimaHabitacion->codHabitacion<<endl;	
 	}
 	if(verificar==9){
-		recorrePais(pais.getRaizPais(), verificar, 0, 0, 0, 0);
+		ReservacionesH.Mostrar();
+		//recorrePais(pais.getRaizPais(), verificar, 0, 0, 0, 0);
 	}
 }
 

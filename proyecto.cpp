@@ -23,7 +23,6 @@
 #include "arbolUsuario.h"
 
 
-
 using namespace std;
 void menu(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAdministradorA administradorA,ArbolUsuario usuario,arbolHotel hotel);
 int menu_reportesh(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAdministradorA administradorA,ArbolUsuario usuario,arbolHotel hotel)
@@ -76,7 +75,6 @@ int menu_reportesh(arbolAgencia agencia,ArbolAdministradorH administradorH,Arbol
                 //Consultar Estrellas de un Hotel
 				//solicita codigo de hotel 
 				
-				            
                 hotel.Reportes(2);
   				system("pause>nul"); // Pausa
   				break;
@@ -128,9 +126,9 @@ int menu_reportesh(arbolAgencia agencia,ArbolAdministradorH administradorH,Arbol
                 break;
             case 9:
             //Consultar ultima habitacion insertada               
-            hotel.Reportes(9);
-            system("pause>nul"); // Pausa            
-            break;
+	            hotel.Reportes(9);
+	            system("pause>nul"); // Pausa            
+	            break;
         }  
 	}
 	else{
@@ -155,9 +153,9 @@ int menu_lista(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAdmi
         
         // Texto del menú que se verá cada vez
     
-        printf("\033[32m");
+
 		cout << "\n\nQue desea hacer?" << endl;
-		printf("\033[0m");
+
         cout << "\n\n1. Insertar" << endl;
         cout << "2. Eliminar" << endl;
         cout << "3. Modificar" << endl;
@@ -333,9 +331,9 @@ int menu_insertarh(arbolAgencia agencia,ArbolAdministradorH administradorH,Arbol
         
         // Texto del menú que se verá cada vez
         
-        printf("\033[32m");
+
         cout << "\n\nQue desea insertar?" << endl;
-        printf("\033[0m");
+
         cout << "\n\n1. Insertar Hotel" << endl;
         cout << "2. Insertar Piso" << endl;
         cout << "3. Insertar Habitacion" << endl;
@@ -405,12 +403,11 @@ int menu_hoteles(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
         
         // Texto del menú que se verá cada vez
         
-        printf("\033[7;1;36m");
+
         cout << "\n\nBIENVENIDO ADMINISTRADOR DE HOTEL" << endl;
-        printf("\033[0m");
-        printf("\033[32m");
+
 		cout << "\n\nQue desea hacer?" << endl;
-		printf("\033[0m");
+
         cout << "\n\n1. Insertar" << endl;
         cout << "2. Modificar" << endl;
         cout << "3. Reportes" << endl;
@@ -470,7 +467,6 @@ void validarAdministradorH(arbolAgencia agencia,ArbolAdministradorH administrado
 	long double codigo;
 	cin>>codigo;
 	if (administradorH.validaAdministradorH(codigo,administradorH.raiz)){
-		cout<<"entro";
 		menu_hoteles(agencia, administradorH,administradorA,usuario,hotel);
 	}
 	else{
@@ -1170,8 +1166,17 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 			int identificacion;
 			cin>>identificacion;
 			cin.ignore();
+			
 			//pedir dato codHotel
-			if(agencia.agenciaenPais(pais.getRaizPais(),codPais,identificacion)==1/*aqui la otra verificscion*/){
+			cout<<"Digite el codigo de hotel: ";
+			int codhotel;
+			cin>>codhotel;
+			//cin.ignore();
+			hotel.existePais(pais.getRaizPais(),codPais);
+			if(hotel.existeHotel(hotel.paisencontrado->hoteles, codhotel)==3){
+				cout<<"Este hotel no tiene pisos por lo que no puede reservar"<<endl;
+			}
+			if(agencia.agenciaenPais(pais.getRaizPais(),codPais,identificacion)==1 && hotel.existeHotel(hotel.paisencontrado->hoteles, codhotel)==2){
 				cout<<"Los 2 datos se encuentran en el mismo pais puede hacer la reservacion"<<endl;
 				cout<<"Digite el codigo del TipoFlotilla: ";
 				int codigo;
@@ -1184,11 +1189,91 @@ void menuUsuario(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAd
 				if(agencia.existeCarrosDatos(pais.getRaizPais(),codPais,identificacion,codigo,placa)){
 					cout<<"Se realizo la reservacion"<<endl;
 					listaReservaA.InsertarFinal(codPais,identificacion,codigo,placa,numIden);
+					
+					int NumPiso;
+					int codigoHabitacion;
+					bool existe_piso = false;
+					bool no_repetido = false;
+					while(existe_piso==false){
+			        	cout<<"\nIngrese el numero del piso del Hotel que desea reservar: ";
+			        	if(cin>>NumPiso){
+				    	//Valores que devuelve la funcion
+							/*
+							 0 -> No existe el NumPiso
+							 1-> Existe el NumPios
+							 2-> La lista de pisos est[a vacia
+							 3-> El piso existe, pero no tiene habitaciones
+							 */
+							 nodoPiso* RaizPisos = hotel.hotelencontrado->PisosHotel;
+			        		if((hotel.existePiso(RaizPisos,NumPiso)==0)){
+			        			cout<<"\nEste numero del piso no esta registrado, favor ingresar otro distinto "<<endl;
+			        			break;
+							}
+							if((hotel.existePiso(RaizPisos,NumPiso)==2)){
+								//Para ingresar habitaciones solo importa si el piso existe
+									
+								existe_piso=true;
+			            		break;
+							}
+							if((hotel.existePiso(RaizPisos,NumPiso)==3)){
+								cout<<"\nEste numero de piso no posee habitaciones, por lo que no ouede utilizar la opcion"<<endl;
+								break;
+							}
+							
+						}
+						else{
+							cout<<"\nEl numero de piso debe ser un numero entero"<<endl;
+							cin.clear();
+							cin.ignore(numeric_limits<streamsize>::max(), '\n');
+						}
+					}
+					if(existe_piso == true){
+					
+						while(no_repetido==false){
+			        		cout<<"\nIngrese el codigo de habitacion: ";
+			        		if(cin>>codigoHabitacion){
+			        				//Valores que devuelve la funcion
+								/*
+								 0 -> No existe el habitacion
+								 1-> Existe la habitacion
+								 2-> No hay habitaciones
+								 3-> Piso sin habitaciones
+								 */
+								 nodoHabitaciones* RaizHabitacion = hotel.pisoencontrado->Habitaciones;
+			        			if((hotel.existeHabitaciones(RaizHabitacion,codigoHabitacion)==0)){
+			            			cout<<"\nEste codigo de habitacion no esta registrado, favor ingresar otro distinto "<<endl;
+			                		
+								}
+								else{
+									
+									no_repetido=true;
+			           				break;
+									
+								}
+							}
+							else{
+								cout<<"\nEl codigo de habitacion debe ser un numero entero"<<endl;
+								cin.clear();
+								cin.ignore(numeric_limits<streamsize>::max(), '\n');
+							}
+						}
+						if(hotel.habitacionencontrada->estado=="L" ){
+							ReservacionesH.InsertarFinal(numIden,codigoHabitacion,"h");
+							hotel.habitacionencontrada->estado = "R";
+						}
+						else{
+							cout<<"La habitacion  ya esta ocupada"<<endl;
+						}
+						
+					}
 					menuUsuario(agencia,administradorH,administradorA,usuario,hotel, numIden);
-				}else{
+				}
+				
+				else{
 					cout<<"No existe carro con esos datos o ya esta reservado"<<endl;
 					menuUsuario(agencia,administradorH,administradorA,usuario,hotel, numIden);
 				}
+
 			}else{
 				cout<<"No estan en el mismo pais"<<endl;
 				menuUsuario(agencia,administradorH,administradorA,usuario,hotel, numIden);
@@ -1255,6 +1340,7 @@ void menu(arbolAgencia agencia,ArbolAdministradorH administradorH,ArbolAdministr
 	}
 	else if(opcion=="4"){
 		menu_lista(agencia, administradorH,administradorA,usuario,hotel);
+		menu(agencia, administradorH,administradorA,usuario,hotel);
 	}
 	else{
 		cout<<"Opcion no valida"<<endl;
